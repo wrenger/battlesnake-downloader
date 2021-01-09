@@ -1,0 +1,11 @@
+image: alpine
+
+deploy:
+  stage: deploy
+  script:
+    - zip -r -FS build/battlesnake-downloader.zip * --exclude '*.git*' --exclude 'build/*'
+  when: manual
+    artifacts:
+    name: "battlesnake-downloader-$CI_COMMIT_REF_NAME"
+    paths: [build/battlesnake-downloader.zip]
+    expire_in: 1 week

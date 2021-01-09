@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <style>
+        .snake_input {
+            width: 100%;
+            display: block;
+            box-sizing: border-box;
+        }
+        .error {
+            margin: 0;
+            color: lightcoral;
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+
+<body>
+    <strong>Battlesnake Downloader</strong>
+
+    <select name="snake" id="snake" class="snake_input" disabled></select>
+    <input type="number" name="turn" id="turn" class="snake_input" value="0" disabled>
+
+    <p id="error" class="error" hidden>Invalid url</p>
+    <button id="download" class="snake_input" disabled>Copy Game</button>
+
+    <script src="main.js"></script>
+</body>
+
+</html>

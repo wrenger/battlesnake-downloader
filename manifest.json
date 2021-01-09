@@ -1,0 +1,21 @@
+{
+    "manifest_version": 2,
+    "name": "Battlesnake Downloader",
+    "version": "0.1",
+    "description": "Download battlesnake games.",
+    "icons": {
+        "32": "icons/snake-32.png"
+    },
+    "permissions": [
+        "activeTab",
+        "webRequest",
+        "clipboardWrite",
+        "*://play.battlesnake.com/g/*",
+        "*://engine.battlesnake.com/games/*"
+    ],
+    "browser_action": {
+        "default_icon": "icons/snake-32.png",
+        "default_title": "Battlesnake",
+        "default_popup": "popup.html"
+    }
+}
