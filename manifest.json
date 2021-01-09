@@ -3,6 +3,7 @@
     "name": "Battlesnake Downloader",
     "version": "0.1",
     "description": "Download battlesnake games.",
+    "homepage_url": "https://gitlab.com/l4r0x/battlesnake-downloader",
     "icons": {
         "32": "icons/snake-32.png"
     },

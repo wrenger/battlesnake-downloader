@@ -6,7 +6,7 @@ deploy:
     - echo Compressing...
   when: manual
   artifacts:
-    name: "battlesnake-downloader-$CI_COMMIT_REF_NAME"
+    name: "battlesnake-downloader"
     paths: ["*.json", "icons/*.png", "*.html", "*.css", "*.js"]
     exclude: [".git/*"]
     expire_in: 1 week
