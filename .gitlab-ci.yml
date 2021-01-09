@@ -3,9 +3,10 @@ image: alpine
 deploy:
   stage: deploy
   script:
-    - zip -r -FS build/battlesnake-downloader.zip * --exclude '*.git*' --exclude 'build/*'
+    - echo Compressing...
   when: manual
-    artifacts:
+  artifacts:
     name: "battlesnake-downloader-$CI_COMMIT_REF_NAME"
-    paths: [build/battlesnake-downloader.zip]
+    paths: ["*.json", "icons/*.png", "*.html", "*.css", "*.js"]
+    exclude: [".git/*"]
     expire_in: 1 week
