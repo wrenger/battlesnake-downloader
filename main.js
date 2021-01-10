@@ -80,21 +80,22 @@ function load_frame(game, snake_id, turn) {
         .catch((error) => setError(error.message));
 }
 
-function convertPoint(point) {
+function convertPoint(point, height) {
     return {
         x: point.X,
-        y: point.Y
+        // api v1: invert y axis
+        y: height - 1 - point.Y
     }
 }
 
-function convertSnake(snake) {
+function convertSnake(snake, height) {
     return {
         id: snake.ID,
         name: snake.Name,
-        body: snake.Body.map(convertPoint),
+        body: snake.Body.map(p => convertPoint(p, height)),
         health: snake.Health,
         latency: parseInt(snake.Latency),
-        head: convertPoint(snake.Body[0]),
+        head: convertPoint(snake.Body[0], height),
         length: snake.Body.length,
         shout: snake.Shout,
         squad: snake.Squad,
@@ -102,9 +103,13 @@ function convertSnake(snake) {
 }
 
 function convertState(game, frame, snake_id) {
+    let height = game.Height;
+
     // Only grab alive snakes
-    let snakes = frame.Snakes.filter(snake => snake.Death == null).map(convertSnake);
-    let you = snakes.find(snake => snake.id == snake_id)
+    let snakes = frame.Snakes
+        .filter(snake => snake.Death == null)
+        .map(s => convertSnake(s, height));
+    let you = snakes.find(snake => snake.id == snake_id);
 
     if (!you) {
         throw new Error("The snake is already dead");
@@ -120,8 +125,8 @@ function convertState(game, frame, snake_id) {
         board: {
             width: game.Width,
             height: game.Height,
-            food: frame.Food.map(convertPoint),
-            hazards: frame.Hazards.map(convertPoint),
+            food: frame.Food.map(p => convertPoint(p, height)),
+            hazards: frame.Hazards.map(p => convertPoint(p, height)),
             snakes: snakes,
         },
         you
