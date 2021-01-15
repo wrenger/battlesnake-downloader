@@ -5,6 +5,8 @@ const TURN_INPUT = document.getElementById("turn");
 const DOWNLOAD_BTN = document.getElementById("download");
 const ERROR_LABEL = document.getElementById("error");
 
+SNAKE_SELECT.addEventListener("change", resetDownloadBtn);
+TURN_INPUT.addEventListener("change", resetDownloadBtn);
 DOWNLOAD_BTN.addEventListener("click", download);
 
 let game = null;
@@ -26,6 +28,10 @@ browser.tabs.query({ active: true, currentWindow: true })
     })
     .catch(error => setError(error.message))
 
+
+function resetDownloadBtn() {
+    DOWNLOAD_BTN.classList.remove("clicked");
+}
 
 function setError(msg) {
     if (msg) {
@@ -73,6 +79,7 @@ function load_frame(game, snake_id, turn) {
                 let state = convertState(game, data.Frames[0], snake_id);
                 navigator.clipboard.writeText(JSON.stringify(state))
                     .catch(error => console.error("Error", error));
+                DOWNLOAD_BTN.classList.add("clicked");
             } else {
                 throw Error("Invalid turn");
             }

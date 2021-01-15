@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <style>
+        .error {
+            margin: 0;
+            color: lightcoral;
+        }
+
+        button.clicked {
+            background-color: #000f40;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="panel-section panel-section-header">
+        <div class="icon-section-header">
+            <img src="/icons/snake-32.png" alt="Battlesnake">
+        </div>
+        <div class="text-section-header">Battlesnake Downloader</div>
+    </header>
+
+    <div class="panel-section panel-section-formElements">
+        <div class="panel-formElements-item">
+            <label for="snake" class="browser-style-label">Snake:</label>
+            <select id="snake" class="browser-style"></select>
+        </div>
+        <div class="panel-formElements-item browser-style">
+            <label for="turn" class="browser-style-label">Turn:</label>
+            <input type="text" value="0" id="turn" />
+        </div>
+    </div>
+    <div class="panel-section">
+        <p id="error" class="error" hidden>Invalid url</p>
+    </div>
+
+    <footer class="panel-section panel-section-footer">
+        <button id="download" style="margin: 0;" class="panel-section-footer-button default">Download Game</button>
+    </footer>
+
+    <script src="/popup/popup.js"></script>
+</body>
+
+</html>

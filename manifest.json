@@ -14,15 +14,17 @@
         "*://play.battlesnake.com/g/*",
         "*://engine.battlesnake.com/games/*"
     ],
-    "browser_action": {
+    "page_action": {
+        "browser_style": true,
         "default_icon": "icons/snake-32.png",
-        "default_title": "Battlesnake",
-        "default_popup": "popup.html"
+        "default_title": "Download Battlesnake Game",
+        "default_popup": "popup/index.html",
+        "show_matches": ["*://play.battlesnake.com/g/*"]
     },
     "browser_specific_settings": {
         "gecko": {
             "id": "battlesnake-downloader@l4r0x.com",
-            "strict_min_version": "57.0"
+            "strict_min_version": "67.0"
         }
     }
 }
