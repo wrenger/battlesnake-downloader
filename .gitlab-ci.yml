@@ -7,6 +7,6 @@ deploy:
   when: manual
   artifacts:
     name: "battlesnake-downloader"
-    paths: ["*.json", "icons/*.png", "*.html", "*.css", "*.js"]
+    paths: ["*.json", "icons/*.png", "**/*.html", "**/*.css", "**/*.js"]
     exclude: [".git/*"]
     expire_in: 1 week
