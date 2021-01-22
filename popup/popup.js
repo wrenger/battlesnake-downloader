@@ -19,7 +19,7 @@ browser.tabs.query({ active: true, currentWindow: true })
                 let components = url.pathname.split("/");
                 if (components.length == 4 && components[1] == "g") {
                     let game_id = components[2];
-                    load_game(game_id);
+                    loadGame(game_id);
                     return;
                 }
             }
@@ -44,11 +44,11 @@ function setError(msg) {
 
 function download() {
     if (game) {
-        load_frame(game, SNAKE_SELECT.value, parseInt(TURN_INPUT.value));
+        loadFrame(game, SNAKE_SELECT.value, parseInt(TURN_INPUT.value));
     }
 }
 
-function load_game(game_id) {
+function loadGame(game_id) {
     let url = ENGINE_URL + game_id
     fetch(url)
         .then(response => response.json())
@@ -62,15 +62,15 @@ function load_game(game_id) {
                 SNAKE_SELECT.add(option);
             });
 
-            SNAKE_SELECT.disabled = false
-            TURN_INPUT.disabled = false
-            DOWNLOAD_BTN.disabled = false
+            SNAKE_SELECT.disabled = false;
+            TURN_INPUT.disabled = false;
+            DOWNLOAD_BTN.disabled = false;
         })
         .catch((error) => setError(error.message));
 }
 
 
-function load_frame(game, snake_id, turn) {
+function loadFrame(game, snake_id, turn) {
     let url = ENGINE_URL + game.ID + "/frames?offset=" + turn + "&limit=1";
     fetch(url)
         .then(response => response.json())
@@ -87,22 +87,21 @@ function load_frame(game, snake_id, turn) {
         .catch((error) => setError(error.message));
 }
 
-function convertPoint(point, height) {
+function convertPoint(point) {
     return {
         x: point.X,
-        // api v1: invert y axis
-        y: height - 1 - point.Y
+        y: point.Y,
     }
 }
 
-function convertSnake(snake, height) {
+function convertSnake(snake) {
     return {
         id: snake.ID,
         name: snake.Name,
-        body: snake.Body.map(p => convertPoint(p, height)),
+        body: snake.Body.map(convertPoint),
         health: snake.Health,
         latency: parseInt(snake.Latency),
-        head: convertPoint(snake.Body[0], height),
+        head: convertPoint(snake.Body[0]),
         length: snake.Body.length,
         shout: snake.Shout,
         squad: snake.Squad,
@@ -110,12 +109,10 @@ function convertSnake(snake, height) {
 }
 
 function convertState(game, frame, snake_id) {
-    let height = game.Height;
-
     // Only grab alive snakes
     let snakes = frame.Snakes
         .filter(snake => snake.Death == null)
-        .map(s => convertSnake(s, height));
+        .map(convertSnake);
     let you = snakes.find(snake => snake.id == snake_id);
 
     if (!you) {
@@ -132,8 +129,8 @@ function convertState(game, frame, snake_id) {
         board: {
             width: game.Width,
             height: game.Height,
-            food: frame.Food.map(p => convertPoint(p, height)),
-            hazards: frame.Hazards.map(p => convertPoint(p, height)),
+            food: frame.Food.map(convertPoint),
+            hazards: frame.Hazards.map(convertPoint),
             snakes: snakes,
         },
         you

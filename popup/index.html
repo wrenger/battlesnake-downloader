@@ -8,21 +8,18 @@
             margin: 0;
             color: lightcoral;
         }
-
-        button.clicked {
+        button.panel-section-footer-button.clicked,
+        button.panel-section-footer-button.clicked:hover {
             background-color: #000f40;
         }
+        label.browser-style-label {
+            width: 50px;
+        }
     </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <header class="panel-section panel-section-header">
-        <div class="icon-section-header">
-            <img src="/icons/snake-32.png" alt="Battlesnake">
-        </div>
-        <div class="text-section-header">Battlesnake Downloader</div>
-    </header>
-
     <div class="panel-section panel-section-formElements">
         <div class="panel-formElements-item">
             <label for="snake" class="browser-style-label">Snake:</label>
@@ -30,7 +27,7 @@
         </div>
         <div class="panel-formElements-item browser-style">
             <label for="turn" class="browser-style-label">Turn:</label>
-            <input type="text" value="0" id="turn" />
+            <input type="number" value="0" id="turn" />
         </div>
     </div>
     <div class="panel-section">
@@ -38,7 +35,7 @@
     </div>
 
     <footer class="panel-section panel-section-footer">
-        <button id="download" style="margin: 0;" class="panel-section-footer-button default">Download Game</button>
+        <button id="download" style="margin: 0;" class="panel-section-footer-button default">Copy Game</button>
     </footer>
 
     <script src="/popup/popup.js"></script>

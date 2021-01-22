@@ -15,7 +15,7 @@
         "*://engine.battlesnake.com/games/*"
     ],
     "page_action": {
-        "browser_style": true,
+        "browser_style": false,
         "default_icon": "icons/snake-32.png",
         "default_title": "Download Battlesnake Game",
         "default_popup": "popup/index.html",
