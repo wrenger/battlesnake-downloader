@@ -1,63 +1,63 @@
 :root {
-    --text: #222426;
-    --text-disabled: #999;
-    --text-dark: #1a1a1a;
-    --select-text: #000;
+  --text: #222426;
+  --text-disabled: #999;
+  --text-dark: #1a1a1a;
+  --select-text: #000;
 
-    --background: #fff;
+  --background: #fff;
 
-    --btn: #fbfbfb;
-    --btn-bd: #b1b1b1;
-    --btn-hover: #ebebeb;
-    --btn-press: #d4d4d4;
-    --btn-press-bd: #858585;
-    --btn-focused-border: #fff;
+  --btn: #fbfbfb;
+  --btn-bd: #b1b1b1;
+  --btn-hover: #ebebeb;
+  --btn-press: #d4d4d4;
+  --btn-press-bd: #858585;
+  --btn-focused-border: #fff;
 
-    --input-border: #fff;
-    --input-shadow: rgba(97, 181, 255, 0);
-    --input-invalid-bd: rgba(251, 0, 34, 0.3);
+  --input-border: #fff;
+  --input-shadow: rgba(97, 181, 255, 0);
+  --input-invalid-bd: rgba(251, 0, 34, 0.3);
 
-    --btn-def: #0996f8;
-    --btn-def-bd: #0670cc;
-    --btn-def-hover: #0670cc;
-    --btn-def-hover-bd: #005bab;
-    --btn-def-press: #005bab;
-    --btn-def-press-bd: #004480;
+  --btn-def: #0996f8;
+  --btn-def-bd: #0670cc;
+  --btn-def-hover: #0670cc;
+  --btn-def-hover-bd: #005bab;
+  --btn-def-press: #005bab;
+  --btn-def-press-bd: #004480;
 
-    --focus-bd: #0996f8;
-    --focus-shadow: rgba(97, 181, 255, 0.75);
+  --focus-bd: #0996f8;
+  --focus-shadow: rgba(97, 181, 255, 0.75);
 
-    --shortcut: #808080;
+  --shortcut: #808080;
 
-    --panel-bd: rgba(0, 0, 0, 0.15);
+  --panel-bd: rgba(0, 0, 0, 0.15);
 
-    --item-bd: rgba(0, 0, 0, 0.1);
-    --item-hover: rgba(0, 0, 0, 0.06);
-    --item-active: rgba(0, 0, 0, 0.1);
+  --item-bd: rgba(0, 0, 0, 0.1);
+  --item-hover: rgba(0, 0, 0, 0.06);
+  --item-active: rgba(0, 0, 0, 0.1);
 
-    --footer: rgba(0, 0, 0, 0.06);
-    --footer-active: rgba(0, 0, 0, 0.1);
-    --footer-bd: rgba(0, 0, 0, 0.1);
+  --footer: rgba(0, 0, 0, 0.06);
+  --footer-active: rgba(0, 0, 0, 0.1);
+  --footer-bd: rgba(0, 0, 0, 0.1);
 }
 
 @media (prefers-color-scheme: dark) {
-    :root {
-        --text: #dddbd9;
-        --text-disabled: #666666;
-        --text-dark: #e5e5e5;
-        --select-text: #fff;
+  :root {
+    --text: #dddbd9;
+    --text-disabled: #666666;
+    --text-dark: #e5e5e5;
+    --select-text: #fff;
 
-        --background: #2a2a2e;
+    --background: #2a2a2e;
 
-        --btn: #040404;
-        --btn-bd: #4e4e4e;
-        --btn-hover: #141414;
-        --btn-press: #2b2b2b;
-        --btn-press-bd: #7a7a7a;
-        --btn-focused-border: #ffffff;
+    --btn: #040404;
+    --btn-bd: #4e4e4e;
+    --btn-hover: #141414;
+    --btn-press: #2b2b2b;
+    --btn-press-bd: #7a7a7a;
+    --btn-focused-border: #ffffff;
 
-        --input-border: #000000;
-    }
+    --input-border: #000000;
+  }
 }
 
 /* Global */
@@ -143,7 +143,7 @@ select.browser-style.pressed {
 button.browser-style:disabled,
 select.browser-style:disabled {
   color: var(--text-disabled);
-  opacity: .5;
+  opacity: 0.5;
 }
 
 button.browser-style.focused,
@@ -178,7 +178,7 @@ button.browser-style.default.focused {
 
 .browser-style.disabled > label {
   color: var(--text-disabled);
-  opacity: .5;
+  opacity: 0.5;
 }
 
 /* Radio Buttons */
@@ -357,7 +357,7 @@ textarea.browser-style.hover {
 .browser-style > input[type="number"]:disabled,
 textarea.browser-style:disabled {
   color: var(--text-disabled);
-  opacity: .5;
+  opacity: 0.5;
 }
 
 .browser-style > input[type="text"].focused,
@@ -388,8 +388,7 @@ textarea.browser-style:focus:hover {
 .browser-style > input[type="number"]:invalid:not(:focus),
 textarea.browser-style:invalid:not(:focus) {
   border-color: var(--red-60);
-  box-shadow: 0 0 0 1px var(--red-60),
-    0 0 0 4px var(--input-invalid-bd);
+  box-shadow: 0 0 0 1px var(--red-60), 0 0 0 4px var(--input-invalid-bd);
 }
 
 .panel-section {
@@ -462,7 +461,7 @@ textarea.browser-style:invalid:not(:focus) {
 .panel-list-item > .text-shortcut {
   color: var(--shortcut);
   font-family: "Lucida Grande", caption;
-  font-size: .847em;
+  font-size: 0.847em;
   justify-content: flex-end;
 }
 
@@ -525,7 +524,7 @@ textarea.browser-style:invalid:not(:focus) {
 .panel-section-footer-button > .text-shortcut {
   color: var(--shortcut);
   font-family: "Lucida Grande", caption;
-  font-size: .847em;
+  font-size: 0.847em;
 }
 
 .panel-section-footer-button:hover {
