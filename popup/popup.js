@@ -49,7 +49,7 @@ function download() {
 }
 
 function loadGame(game_id) {
-    let url = ENGINE_URL + game_id
+    const url = ENGINE_URL + game_id
     fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -71,7 +71,7 @@ function loadGame(game_id) {
 
 
 function loadFrame(game, snake_id, turn) {
-    let url = ENGINE_URL + game.ID + "/frames?offset=" + turn + "&limit=1";
+    const url = ENGINE_URL + game.ID + "/frames?offset=" + turn + "&limit=1";
     fetch(url)
         .then(response => response.json())
         .then(data => {
@@ -108,12 +108,54 @@ function convertSnake(snake) {
     }
 }
 
+function parseNum(value) {
+    const num = Number.parseInt(value, 10);
+    return Number.isNaN(num) ? undefined : num;
+}
+
+function convertRuleset(ruleset) {
+    const {
+        name,
+        foodSpawnChance,
+        minimumFood,
+        damagePerTurn,
+        shrinkEveryNTurns,
+        allowBodyCollisions,
+        sharedElimination,
+        sharedHealth,
+        sharedLength,
+        ...other
+    } = ruleset;
+
+    return {
+        name: name,
+        version: "?",
+        settings: {
+            foodSpawnChance: parseNum(foodSpawnChance),
+            minimumFood: parseNum(minimumFood),
+            hazardDamagePerTurn: parseNum(damagePerTurn),
+            royale: {
+                shrinkEveryNTurns: parseNum(shrinkEveryNTurns),
+            },
+            squad: {
+                allowBodyCollisions: allowBodyCollisions == "true",
+                sharedElimination: sharedElimination == "true",
+                sharedHealth: sharedHealth == "true",
+                sharedLength: sharedLength == "true",
+            },
+            ...other
+        }
+    }
+}
+
 function convertState(game, frame, snake_id) {
+    console.log(frame);
+
     // Only grab alive snakes
-    let snakes = frame.Snakes
+    const snakes = frame.Snakes
         .filter(snake => snake.Death == null)
         .map(convertSnake);
-    let you = snakes.find(snake => snake.id == snake_id);
+    const you = snakes.find(snake => snake.id == snake_id);
 
     if (!you) {
         throw new Error("The snake is already dead");
@@ -122,8 +164,9 @@ function convertState(game, frame, snake_id) {
     return {
         game: {
             id: game.ID,
-            ruleset: game.Ruleset,
+            ruleset: convertRuleset(game.Ruleset),
             timeout: game.SnakeTimeout,
+            source: game.Source ?? "unknown",
         },
         turn: frame.Turn,
         board: {
