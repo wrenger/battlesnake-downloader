@@ -2,11 +2,13 @@ const ENGINE_URL = "https://engine.battlesnake.com/games/";
 
 const SNAKE_SELECT = document.getElementById("snake");
 const TURN_INPUT = document.getElementById("turn");
+const FORMAT_INPUT = document.getElementById("format");
 const DOWNLOAD_BTN = document.getElementById("download");
 const ERROR_LABEL = document.getElementById("error");
 
 SNAKE_SELECT.addEventListener("change", resetDownloadBtn);
 TURN_INPUT.addEventListener("change", resetDownloadBtn);
+FORMAT_INPUT.addEventListener("change", resetDownloadBtn);
 DOWNLOAD_BTN.addEventListener("click", download);
 
 let game = null;
@@ -64,6 +66,7 @@ function loadGame(game_id) {
 
             SNAKE_SELECT.disabled = false;
             TURN_INPUT.disabled = false;
+            FORMAT_INPUT.disabled = false;
             DOWNLOAD_BTN.disabled = false;
         })
         .catch((error) => setError(error.message));
@@ -76,7 +79,12 @@ function loadFrame(game, snake_id, turn) {
         .then(response => response.json())
         .then(data => {
             if (data.Frames && data.Count > 0) {
-                let state = convertState(game, data.Frames[0], snake_id);
+                let state;
+                if (FORMAT_INPUT.value == "snake") {
+                    state = convertState(game, data.Frames[0], snake_id);
+                } else {
+                    state = data.Frames[0];
+                }
                 navigator.clipboard.writeText(JSON.stringify(state))
                     .catch(error => console.error("Error", error));
                 DOWNLOAD_BTN.classList.add("clicked");
