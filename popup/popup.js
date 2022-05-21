@@ -98,13 +98,18 @@ function convertSnake(snake) {
     return {
         id: snake.ID,
         name: snake.Name,
-        body: snake.Body.map(convertPoint),
         health: snake.Health,
+        body: snake.Body.map(convertPoint),
         latency: parseInt(snake.Latency),
         head: convertPoint(snake.Body[0]),
         length: snake.Body.length,
         shout: snake.Shout,
         squad: snake.Squad,
+        customizations: {
+            color: snake.Color,
+            head: snake.HeadType,
+            tail: snake.TailType,
+        }
     }
 }
 
@@ -149,8 +154,6 @@ function convertRuleset(ruleset) {
 }
 
 function convertState(game, frame, snake_id) {
-    console.log(frame);
-
     // Only grab alive snakes
     const snakes = frame.Snakes
         .filter(snake => snake.Death == null)
@@ -165,6 +168,7 @@ function convertState(game, frame, snake_id) {
         game: {
             id: game.ID,
             ruleset: convertRuleset(game.Ruleset),
+            map: game.Map,
             timeout: game.SnakeTimeout,
             source: game.Source ?? "unknown",
         },
