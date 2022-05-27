@@ -1,16 +1,20 @@
 const ENGINE_URL = "https://engine.battlesnake.com/games/";
 
+// DOM Nodes
 const SNAKE_SELECT = document.getElementById("snake");
 const TURN_INPUT = document.getElementById("turn");
 const DOWNLOAD_BTN = document.getElementById("download");
 const ERROR_LABEL = document.getElementById("error");
 
+// Event listeners
 SNAKE_SELECT.addEventListener("change", resetDownloadBtn);
 TURN_INPUT.addEventListener("change", resetDownloadBtn);
 DOWNLOAD_BTN.addEventListener("click", download);
 
+// Currently loaded game
 let game = null;
 
+// When the popup is openend query the browsers url and load the game data
 browser.tabs.query({ active: true, currentWindow: true })
     .then(tabs => {
         if (tabs && tabs[0].url) {
@@ -33,6 +37,9 @@ function resetDownloadBtn() {
     DOWNLOAD_BTN.classList.remove("clicked");
 }
 
+/**
+ * Display the error message.
+ */
 function setError(msg) {
     if (msg) {
         ERROR_LABEL.textContent = msg;
@@ -48,6 +55,9 @@ function download() {
     }
 }
 
+/**
+ * Load the general game data including board size and ruleset.
+ */
 function loadGame(game_id) {
     const url = ENGINE_URL + game_id
     fetch(url)
@@ -69,7 +79,9 @@ function loadGame(game_id) {
         .catch((error) => setError(error.message));
 }
 
-
+/**
+ * Load the game state for a given turn.
+ */
 function loadFrame(game, snake_id, turn) {
     const url = ENGINE_URL + game.ID + "/frames?offset=" + turn + "&limit=1";
     fetch(url)
@@ -87,6 +99,47 @@ function loadFrame(game, snake_id, turn) {
         .catch((error) => setError(error.message));
 }
 
+
+/**
+ * Converts the game data to the APIv1 format.
+ *
+ * The public API is well documented, the underlying engine, however, not at all.
+ * Their structure and field names differ.
+ * This manual conversion is fairly fagile and has to be kept up to date.
+ *
+ * @see https://docs.battlesnake.com/references/api
+ */
+function convertState(game, frame, snake_id) {
+    // Only grab alive snakes
+    const snakes = frame.Snakes
+        .filter(snake => snake.Death == null)
+        .map(convertSnake);
+    const you = snakes.find(snake => snake.id == snake_id);
+
+    if (!you) {
+        throw new Error("The snake is already dead");
+    }
+
+    return {
+        game: {
+            id: game.ID,
+            ruleset: convertRuleset(game.Ruleset),
+            map: game.Map,
+            timeout: game.SnakeTimeout,
+            source: game.Source ?? "unknown",
+        },
+        turn: frame.Turn,
+        board: {
+            width: game.Width,
+            height: game.Height,
+            food: frame.Food.map(convertPoint),
+            hazards: frame.Hazards.map(convertPoint),
+            snakes: snakes,
+        },
+        you
+    }
+}
+
 function convertPoint(point) {
     return {
         x: point.X,
@@ -94,6 +147,11 @@ function convertPoint(point) {
     }
 }
 
+/**
+ * Converts the snake data, mostly lowercasing its its fields and adding missing ones.
+ *
+ * @see https://docs.battlesnake.com/references/api#battlesnake
+ */
 function convertSnake(snake) {
     return {
         id: snake.ID,
@@ -118,6 +176,11 @@ function parseNum(value) {
     return Number.isNaN(num) ? undefined : num;
 }
 
+/**
+ * Converts the ruleset component of the game data.
+ *
+ * @see https://docs.battlesnake.com/references/api#ruleset
+ */
 function convertRuleset(ruleset) {
     const {
         name,
@@ -150,36 +213,5 @@ function convertRuleset(ruleset) {
             },
             ...other
         }
-    }
-}
-
-function convertState(game, frame, snake_id) {
-    // Only grab alive snakes
-    const snakes = frame.Snakes
-        .filter(snake => snake.Death == null)
-        .map(convertSnake);
-    const you = snakes.find(snake => snake.id == snake_id);
-
-    if (!you) {
-        throw new Error("The snake is already dead");
-    }
-
-    return {
-        game: {
-            id: game.ID,
-            ruleset: convertRuleset(game.Ruleset),
-            map: game.Map,
-            timeout: game.SnakeTimeout,
-            source: game.Source ?? "unknown",
-        },
-        turn: frame.Turn,
-        board: {
-            width: game.Width,
-            height: game.Height,
-            food: frame.Food.map(convertPoint),
-            hazards: frame.Hazards.map(convertPoint),
-            snakes: snakes,
-        },
-        you
     }
 }
