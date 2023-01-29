@@ -21,7 +21,7 @@ browser.tabs.query({ active: true, currentWindow: true })
             let url = new URL(tabs[0].url);
             if (url.hostname == "play.battlesnake.com") {
                 let components = url.pathname.split("/");
-                if (components.length == 4 && components[1] == "g") {
+                if (components.length == 3 && components[1] == "game") {
                     let game_id = components[2];
                     loadGame(game_id);
                     return;

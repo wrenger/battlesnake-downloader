@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Battlesnake Downloader",
-    "version": "0.7",
+    "version": "0.8",
     "description": "Download battlesnake games.",
     "homepage_url": "https://gitlab.com/wrenger/battlesnake-downloader",
     "icons": {
@@ -11,7 +11,7 @@
         "activeTab",
         "webRequest",
         "clipboardWrite",
-        "*://play.battlesnake.com/g/*",
+        "*://play.battlesnake.com/game/*",
         "*://engine.battlesnake.com/games/*"
     ],
     "page_action": {
@@ -19,7 +19,7 @@
         "default_icon": "icons/snake-32.png",
         "default_title": "Download Battlesnake Game",
         "default_popup": "popup/index.html",
-        "show_matches": ["*://play.battlesnake.com/g/*"]
+        "show_matches": ["*://play.battlesnake.com/game/*"]
     },
     "browser_specific_settings": {
         "gecko": {
