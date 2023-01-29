@@ -1,0 +1,38 @@
+# Simple workflow for deploying static content to GitHub Pages
+name: Compress static content
+
+on:
+  release:
+    types: [ published ]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Allow one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  # Single deploy job since we're just deploying
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Compress
+        run: zip battlesnake-downloader.zip **/*.json **/*.html **/*.css **/*.js icons/*.png
+      - name: Upload
+        uses: actions/upload-artifact@v2
+        with:
+          name: battlesnake-downloader.zip
+          path: battlesnake-downloader.zip
+      - name: Upload Release Asset
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: battlesnake-downloader.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
