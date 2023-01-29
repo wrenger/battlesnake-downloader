@@ -10,7 +10,7 @@ Firefox extension for downloading [battlesnake](https://play.battlesnake.com) ga
 
 ### Download latest build
 
-* [battlesnake-downloader.zip](https://gitlab.com/wrenger/battlesnake-downloader/-/jobs/artifacts/main/download?job=deploy)
+* [release](https://github.com/wrenger/battlesnake-downloader/releases/latest)
 
 Install it by selecting `about:addons` > `Install Add-On From File...`.
 
