@@ -1,6 +1,9 @@
 # Battlesnake Downloader
 
-Firefox extension for downloading [battlesnake](https://play.battlesnake.com) games.
+Firefox extension for fetching turns of [battlesnake](https://play.battlesnake.com) games to simplify testing and developing snakes with real game data.
+
+This extension shows a button in the URL bar of an opened game, allowing you to copy specific turns.
+The copied data closely relates to the requests the snakes got during the actual game.
 
 ## Installation
 
@@ -8,7 +11,7 @@ Firefox extension for downloading [battlesnake](https://play.battlesnake.com) ga
 
 * [https://addons.mozilla.org/en-US/firefox/addon/battlesnake-downloader/](https://addons.mozilla.org/en-US/firefox/addon/battlesnake-downloader/)
 
-### Download latest build
+### Download Latest Release
 
 * [release](https://github.com/wrenger/battlesnake-downloader/releases/latest)
 
