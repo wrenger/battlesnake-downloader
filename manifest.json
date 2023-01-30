@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Battlesnake Downloader",
-    "version": "0.8",
+    "version": "0.9",
     "description": "Download battlesnake games.",
     "homepage_url": "https://github.com/wrenger/battlesnake-downloader",
     "icons": {
