@@ -95,7 +95,7 @@ function loadFrame(game, snake_id, turn) {
                 if (FORMAT_INPUT.value == "snake") {
                     state = convertState(game, data.Frames[0], snake_id);
                 } else {
-                    state = data.Frames[0];
+                    state = { Game: game, Frames: data.Frames };
                 }
                 navigator.clipboard.writeText(JSON.stringify(state))
                     .catch(error => console.error("Error", error));
@@ -115,7 +115,7 @@ function loadFrame(game, snake_id, turn) {
  * Their structure and field names differ.
  * This manual conversion is fairly fagile and has to be kept up to date.
  *
- * @see https://docs.battlesnake.com/references/api
+ * @see https://docs.battlesnake.com/api
  */
 function convertState(game, frame, snake_id) {
     // Only grab alive snakes
@@ -184,6 +184,11 @@ function parseNum(value) {
     return Number.isNaN(num) ? undefined : num;
 }
 
+function parseBool(value) {
+    if (value == undefined) return undefined;
+    return value == "true";
+}
+
 /**
  * Converts the ruleset component of the game data.
  *
@@ -203,6 +208,17 @@ function convertRuleset(ruleset) {
         ...other
     } = ruleset;
 
+    const squad = {
+        allowBodyCollisions: parseBool(allowBodyCollisions),
+        sharedElimination: parseBool(sharedElimination),
+        sharedHealth: parseBool(sharedHealth),
+        sharedLength: parseBool(sharedLength)
+    }
+
+    const royale = {
+        shrinkEveryNTurns: parseNum(shrinkEveryNTurns)
+    }
+
     return {
         name: name,
         version: "?",
@@ -210,15 +226,8 @@ function convertRuleset(ruleset) {
             foodSpawnChance: parseNum(foodSpawnChance),
             minimumFood: parseNum(minimumFood),
             hazardDamagePerTurn: parseNum(damagePerTurn),
-            royale: {
-                shrinkEveryNTurns: parseNum(shrinkEveryNTurns),
-            },
-            squad: {
-                allowBodyCollisions: allowBodyCollisions == "true",
-                sharedElimination: sharedElimination == "true",
-                sharedHealth: sharedHealth == "true",
-                sharedLength: sharedLength == "true",
-            },
+            royale: royale.length > 0 ? royale : undefined,
+            squad: squad.length > 0 ? squad : undefined,
             ...other
         }
     }
